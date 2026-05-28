@@ -6,11 +6,14 @@ int main(int argc, char *argv[]) {
   setbuf(stdout, NULL);
 
   // TODO: Uncomment the code below to pass the first stage
-   printf("$ ");
+   while(1){
+    printf("$ ");
   //take user input as a variable then print $variable: command not found
   char command[1024];
   fgets(command, sizeof(command), stdin);
   command[strcspn(command, "\n")] = '\0';
   printf("%s: command not found\n" ,command);
-  return 0;
+
+  }
+    return 0;
 }
