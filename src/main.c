@@ -15,10 +15,33 @@ int main(int argc, char *argv[]) {
     command[strcspn(command, "\n")] = '\0';
     if(strcmp(command,"exit") == 0){
       break;
-    } else {
-
+    }
+    //Strings are pointers in C. A pointer is a memory address. %s will take the memory address and print the value.
+    //* takes a memory address and grabs the value stored there.
+    //& takes a variable/value and reveals it memory address.
+    else if (strncmp(command, "echo", 3) == 0){ //only looking at the first 5 characters of $command and if it is == to "echo" then run..
+      printf("%s\n", command + 5);
+    }
+    else {
     printf("%s: command not found\n" ,command);
     }
+
+
+    //if(strcmp(command,"exit") == 0){
+    //switch(command){
+      //case "exit":
+        //break;
+      
+      //case "echo":
+        //read command, remove the actualy command (echo) and print whats after it
+      
+    //}
+
+    //if(strcmp(command,"exit") == 0){
+    //  break;
+    //} else {
+    //printf("%s: command not found\n" ,command);
+    //}
 
   }
     return 0;
