@@ -19,8 +19,22 @@ int main(int argc, char *argv[]) {
     //Strings are pointers in C. A pointer is a memory address. %s will take the memory address and print the value.
     //* takes a memory address and grabs the value stored there.
     //& takes a variable/value and reveals it memory address.
-    else if (strncmp(command, "echo", 3) == 0){ //only looking at the first 5 characters of $command and if it is == to "echo" then run..
+    else if (strncmp(command, "echo", 3) == 0){ //only looking at the first 3 characters of $command and if it is == to "echo" then run..
       printf("%s\n", command + 5);
+    }
+    else if(strncmp(command, "type", 3) == 0){
+      if(strncmp(command + 5,"echo", 5) == 0){
+        printf("echo is a shell builtin\n");
+      }
+      else if(strncmp(command + 5, "exit", 5) == 0){
+        printf("exit is a shell builtin\n");
+      }
+      else if(strncmp(command + 5, "type", 5) == 0){
+        printf("type is a shell builtin\n");
+      }
+      else {
+        printf("%s: not found\n", command + 5);
+      }
     }
     else {
     printf("%s: command not found\n" ,command);
