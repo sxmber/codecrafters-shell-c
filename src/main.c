@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 int main(int argc, char *argv[]) {
   // Flush after every printf
   setbuf(stdout, NULL);
@@ -28,10 +29,10 @@ int main(int argc, char *argv[]) {
     //Strings are pointers in C. A pointer is a memory address. %s will take the memory address and print the value.
     //* takes a memory address and grabs the value stored there.
     //& takes a variable/value and reveals it memory address.
-    if (strncmp(command, "echo", 4) == 0){ //only looking at the first 3 characters of $command and if it is == to "echo" then run..
+    else if (strncmp(command, "echo ", 5) == 0){ //only looking at the first 3 characters of $command and if it is == to "echo" then run..
       printf("%s\n", command + 5);
     }
-    if(strncmp(command, "type", 4) == 0){ 
+    else if(strncmp(command, "type ", 5) == 0){ 
       char *target = command + 5; 
       int found = 0;
 
@@ -49,8 +50,17 @@ int main(int argc, char *argv[]) {
 
       if(!found){
         char *path = getenv("PATH");
-        char *splitPath = strtok(path, ":");
-        printf("path: %s\nsplitpath: %s",path,splitPath);
+        char *copyPath = strdup(path);
+        char *splitPath = strtok(copyPath, ":");
+        printf("path: %s\n",path);
+        
+        while(splitPath){
+          int result;
+          result = access(splitPath, F_OK);
+          printf("%d", result);
+          splitPath = strtok(NULL, ":");
+        }
+
       }
      
     //else target not found 
