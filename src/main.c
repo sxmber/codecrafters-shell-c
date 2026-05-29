@@ -8,7 +8,8 @@ int main(int argc, char *argv[]) {
   // TODO: Uncomment the code below to pass the first stage
    while(1){
     
-    
+    char *paths = getenv("PATHS");
+    printf("%s", paths);
     printf("$ ");
     //take user input as a variable then print $variable: command not found
     char command[1024];
