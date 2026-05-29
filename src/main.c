@@ -34,37 +34,41 @@ int main(int argc, char *argv[]) {
     }
     else if(strncmp(command, "type ", 5) == 0){ 
       char *target = command + 5; 
-      int found = 0;
-
+      int foundArg = 0;
+      int foundPath = 0;
       for (int i =0; builtins[i] != NULL; i++){
         if(strcmp(target, builtins[i]) == 0) {
           printf("%s is a shell builtin\n", target);
-          found = 1;
+          foundArg = 1;
           break;
         }
         
-      }
-      //if builtin not found, check PATH
-      //Get path, split it by : and save each one to an array?
-      //loop through each iteration and check the direcory for a match of what user inputed
+      } 
 
-      if(!found){
+      if(!foundArg){
         char *path = getenv("PATH");
         char *copyPath = strdup(path);
         char *splitPath = strtok(copyPath, ":");
-        printf("path: %s\n",path);
+        //printf("path: %s\n",path);
         
         while(splitPath){
-          int result;
-          result = access(splitPath, F_OK);
-          printf("%d", result);
+          char catPath[1024] = "";//fixed size buffer so i dont need to free memory
+          snprintf(catPath, sizeof(catPath), "%s/%s", splitPath, target);//concatanate  the user input target to the path. / is added in the middle. 
+          if(access(catPath, F_OK) == 0 && access(catPath, X_OK) == 0){
+            printf("%s is %s\n", target, catPath);
+            foundPath = 1;
+            break;
+          }
           splitPath = strtok(NULL, ":");
-        }
 
+        }
+        if(foundPath == 0){
+        printf("%s: is not found\n", target);
       }
-     
-    //else target not found 
+        free(copyPath);
+      }
       
+                
     } 
     else {
     printf("%s: command not found\n" ,command);
