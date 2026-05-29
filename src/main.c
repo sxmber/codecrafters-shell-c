@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
 
         }
         if(foundPath == 0){
-        printf("%s: is not found\n", target);
+        printf("%s: not found\n", target);
       }
         free(copyPath);
       }
